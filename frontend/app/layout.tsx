@@ -1,47 +1,23 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
-
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter'
-});
-
-export const metadata: Metadata = {
-  title: 'LifeOS - Personal Productivity Platform',
-  description: 'Your secure gateway to a more productive life',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
-}
+import Sidebar from "../components/Sidebar";
+import "./globals.css";
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
-        <Analytics />
+    <html lang="en">
+      <body className="flex h-screen overflow-hidden bg-background text-text-main">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto p-8 relative">
+          {/* وهج أزرق خفيف خلفي */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 blur-[100px] pointer-events-none" />
+          <div className="relative z-10">
+            {children}
+          </div>
+        </main>
       </body>
     </html>
-  )
+  );
 }
