@@ -1,7 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { Github } from "lucide-react";
+import { Github, Eye, EyeOff, Check, X } from "lucide-react";
 
 export default function RegisterPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  // شروط الباسورد
+  const requirements = [
+    { label: "At least 8 characters", test: password.length >= 8 },
+    { label: "Contains a number", test: /[0-9]/.test(password) },
+    { label: "Contains uppercase letter", test: /[A-Z]/.test(password) },
+    { label: "Passwords match", test: password === confirmPassword && confirmPassword !== "" },
+  ];
+
   return (
     <div className="w-full max-w-md bg-[#051c33]/50 backdrop-blur-xl border border-white/5 p-10 rounded-3xl shadow-2xl">
       <div className="flex flex-col items-center mb-8">
@@ -9,7 +24,7 @@ export default function RegisterPage() {
           <span className="text-white font-bold text-xs">LOS-P</span>
         </div>
         <h1 className="text-2xl font-bold text-white tracking-tight">Create Account</h1>
-        <p className="text-gray-400 text-sm mt-2 text-center">Start your journey with Life OS-Pro</p>
+        <p className="text-gray-400 text-sm mt-2 text-center">Join Life OS-Pro today</p>
       </div>
 
       <form className="space-y-4">
@@ -17,13 +32,57 @@ export default function RegisterPage() {
           <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Full Name</label>
           <input type="text" placeholder="Mo Johnson" className="w-full bg-[#021526] border border-white/5 rounded-xl py-3 px-4 mt-1 focus:outline-none focus:border-[#8B0000]/50 text-sm transition-all text-white" />
         </div>
+
         <div>
           <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Email Address</label>
           <input type="email" placeholder="mo@example.com" className="w-full bg-[#021526] border border-white/5 rounded-xl py-3 px-4 mt-1 focus:outline-none focus:border-[#8B0000]/50 text-sm transition-all text-white" />
         </div>
+
+        {/* Password Field */}
         <div>
           <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Password</label>
-          <input type="password" placeholder="••••••••" className="w-full bg-[#021526] border border-white/5 rounded-xl py-3 px-4 mt-1 focus:outline-none focus:border-[#8B0000]/50 text-sm transition-all text-white" />
+          <div className="relative mt-1">
+            <input 
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••" 
+              className="w-full bg-[#021526] border border-white/5 rounded-xl py-3 px-4 focus:outline-none focus:border-[#8B0000]/50 text-sm transition-all text-white pr-12" 
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Confirm Password Field */}
+        <div>
+          <label className="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Confirm Password</label>
+          <input 
+            type={showPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="••••••••" 
+            className="w-full bg-[#021526] border border-white/5 rounded-xl py-3 px-4 mt-1 focus:outline-none focus:border-[#8B0000]/50 text-sm transition-all text-white" 
+          />
+        </div>
+
+        {/* Password Requirements Checklist */}
+        <div className="grid grid-cols-2 gap-2 mt-4 p-3 bg-black/20 rounded-xl border border-white/5">
+          {requirements.map((req, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <div className={`transition-colors ${req.test ? "text-green-500" : "text-gray-600"}`}>
+                {req.test ? <Check size={14} /> : <X size={14} />}
+              </div>
+              <span className={`text-[10px] font-medium transition-colors ${req.test ? "text-gray-200" : "text-gray-500"}`}>
+                {req.label}
+              </span>
+            </div>
+          ))}
         </div>
         
         <button className="w-full bg-[#8B0000] hover:bg-red-900 text-white font-bold py-3 rounded-xl mt-4 transition-all shadow-lg shadow-[#8B0000]/10 border border-white/5">
