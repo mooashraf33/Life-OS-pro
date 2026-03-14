@@ -1,22 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  /* تعريف الألوان الخاصة بالـ Life OS-Pro */
+  /* ألوان Life OS - Pro الرسمية */
   --color-background: #021526;
   --color-sidebar: #051c33;
-  --color-primary: #8B0000;
-  --color-accent: #1e293b;
+  --color-primary: #8B0000;      /* الأحمر بتاعنا */
+  --color-primary-hover: #660000;
+  --color-accent: #3b82f6;       /* الأزرق بتاع النقطة */
   --color-text-main: #E2E8F0;
-}
-
-:root {
-  --background: var(--color-background);
-  --foreground: var(--color-text-main);
-}
-
-body {
-  background-color: var(--color-background);
-  color: var(--color-text-main);
-  margin: 0;
-  font-family: sans-serif;
+  --color-surface-border: rgba(255, 255, 255, 0.05);
 }
